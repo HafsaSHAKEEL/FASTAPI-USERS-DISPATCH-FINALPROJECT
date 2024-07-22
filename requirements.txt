@@ -1,0 +1,21 @@
+fastapi~=0.111.1
+uvicorn~=0.30.3
+sqlalchemy~=2.0.31
+psycopg2-binary
+pydantic~=2.8.2
+alembic
+passlib~=1.7.4
+python-dotenv
+python-jose[cryptography]
+
+
+
+# python -m venv .venv
+# Get-ChildItem
+# .\.venv\Scripts\Activate
+
+schemas~=0.7.1
+routers~=0.10.1
+dependencies~=7.7.0
+crud~=0.1
+jose~=1.0.0
