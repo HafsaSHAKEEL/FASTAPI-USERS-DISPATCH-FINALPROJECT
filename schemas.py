@@ -28,6 +28,10 @@ class UserCreate(UserBase):
     password: str
 
 
+class UserResponse(BaseModel):
+    username: str
+
+
 class User(UserBase):
     id: int
     is_active: bool
@@ -36,25 +40,13 @@ class User(UserBase):
     class Config:
         orm_mode = True
 
-
-class AddressBase(BaseModel):
-    street: str
-    city: str
-    state: str
-    zip_code: str
-    country: str
+        class Config:
+            orm_mode = True
+            from_attributes = True  # Allow from_orm method
 
 
-class AddressCreate(AddressBase):
-    pass
-
-
-class Address(AddressBase):
-    id: int
-    user_id: int
-
-    class Config:
-        orm_mode = True
+class DispatchCreate(BaseModel):
+    area: str
 
 
 class DispatchStatus(str, enum.Enum):
@@ -68,79 +60,28 @@ class DispatchBase(BaseModel):
     description: str
     date: datetime
     area: str
-    status: DispatchStatus
+    status: DispatchStatus  # Change to enum
     start_time: Optional[datetime] = None
     complete_time: Optional[datetime] = None
     pod_image: Optional[str] = None
     notes: Optional[str] = None
     recipient_name: Optional[str] = None
-
-
-class DispatchCreate(DispatchBase):
-    pass
-
-
-class Dispatch(DispatchBase):
-    id: int
-    owner_id: int
+    created_at: datetime
 
     class Config:
         orm_mode = True
+        from_attributes = True  # Allow from_orm method
 
 
-class DispatchComplete(BaseModel):
-    pod_image: str
-    notes: str
-    recipient_name: str
-
-
-class PackageBase(BaseModel):
-    description: str
-    weight: str
-    dimensions: str
-
-
-class PackageCreate(PackageBase):
-    pass
-
-
-class Package(PackageBase):
-    id: int
-    dispatch_id: int
+class DispatchList(BaseModel):
+    total: int
+    dispatches: list[DispatchBase]
 
     class Config:
         orm_mode = True
+        from_attributes = True  # Allow from_orm method
 
 
-class DispatchStatusHistoryBase(BaseModel):
-    status: DispatchStatus
-    timestamp: datetime
-
-
-class DispatchStatusHistoryCreate(DispatchStatusHistoryBase):
-    pass
-
-
-class DispatchStatusHistory(DispatchStatusHistoryBase):
-    id: int
-    dispatch_id: int
-
-    class Config:
-        orm_mode = True
-
-
-class TokenBase(BaseModel):
-    token: str
-    expiry_date: datetime
-
-
-class TokenCreate(TokenBase):
-    pass
-
-
-class Token(TokenBase):
-    id: int
-    user_id: int
-
-    class Config:
-        orm_mode = True
+class UserLogin(BaseModel):
+    email: str
+    password: str
