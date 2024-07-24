@@ -1,12 +1,12 @@
+import enum
 from datetime import datetime
-
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime, Enum
 from sqlalchemy.orm import relationship
 from database import Base
-import enum
 
 
 class DispatchStatusEnum(str, enum.Enum):
+    IN_PROGRESS = "in_progress"
     PENDING = "pending"
     ACCEPTED = "accepted"
     STARTED = "started"
@@ -29,9 +29,9 @@ class Dispatch(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     area = Column(String, index=True)
-    created_at = Column(DateTime, index=True, default=datetime.utcnow)  # Default to current time
-    description = Column(String, default="No description")  # Default description
-    date = Column(DateTime, default=datetime.utcnow)  # Default to current datetime
+    created_at = Column(DateTime, index=True, default=datetime.utcnow)
+    description = Column(String, default="No description")
+    date = Column(DateTime, default=datetime.utcnow)
     status = Column(Enum(DispatchStatusEnum), default=DispatchStatusEnum.PENDING)
     start_time = Column(DateTime, nullable=True)
     complete_time = Column(DateTime, nullable=True)
