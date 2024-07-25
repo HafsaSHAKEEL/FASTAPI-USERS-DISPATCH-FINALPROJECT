@@ -6,6 +6,11 @@ from database import Base
 
 
 class DispatchStatusEnum(str, enum.Enum):
+    """
+    Enumeration for dispatch status.
+
+    This enum defines the possible statuses a dispatch can have.
+    """
     IN_PROGRESS = "in_progress"
     PENDING = "pending"
     ACCEPTED = "accepted"
@@ -14,6 +19,13 @@ class DispatchStatusEnum(str, enum.Enum):
 
 
 class User(Base):
+    """
+    SQLAlchemy model for the User entity.
+
+    This model represents a user in the system and includes attributes for username,
+    email, hashed password, and active status. It also establishes a relationship
+    to the Dispatch model.
+    """
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -25,6 +37,14 @@ class User(Base):
 
 
 class Dispatch(Base):
+    """
+    SQLAlchemy model for the Dispatch entity.
+
+    This model represents a dispatch in the system and includes attributes for
+    area, created at, description, date, status, start and complete times, proof of
+    delivery image, notes, recipient name, and owner. It also establishes a relationship
+    to the User model.
+    """
     __tablename__ = "dispatches"
 
     id = Column(Integer, primary_key=True, index=True)
